@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/0271217e1a.js" crossorigin="anonymous"></script>
+    <title>Calculator</title>
+</head>
+<style>
+    *{
+     border: 0;
+     margin: 0;
+     box-sizing: border-box;
+     font-family: Arial, Helvetica, sans-serif;
+    }
+    h2{
+        padding: 10px 10px;
+        letter-spacing: 3px;
+        color: white;
+    }
+    body{
+        background-color: rgb(225, 239, 248);
+    }
+    #calculator-container{
+        width: 400px;
+        min-width: 350px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px 2px rgba(253, 251, 251,0.8);
+        margin: 40px auto;
+        background-color: rgb(27, 26, 26);
+        padding: 10px;
+    }
+    #display-container{
+        border-radius: 5px;
+        background-color: rgb(245, 250, 250);
+        height: 80px;
+    }
+    #display-small-light{
+        font-weight: light;
+        font-size: small;
+        padding: 5px;
+        height: 35%;
+        text-align: end;
+        font-style: italic;
+    }
+    #display-large-bold{
+        font-size: xx-large;
+        font-weight: bold;
+        height: 65%;
+        padding: 5px;
+        text-align: end;
+        width: 100%;
+        background-color: rgb(245, 250, 250);
+        border: 0 !important;
+        outline: 0;
+    }
+    #non-functional{
+        margin: 30px 4px 5px 2px;
+        width: 100%;
+    }
+    #non-functional span{
+        padding: 5px;
+        background-color: rgb(245, 250, 250);
+       border-radius: 5px;
+       margin: 5px 3px 0;
+    }
+    #non-functional button{
+        margin: 3px 0px 0;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: medium;
+        width: 40px;
+        height: 30px;
+        border: 0;
+        outline: 0;
+    }
+    #clear-button{
+        color: white;
+        background-color: rgb(190, 48, 48);
+        font-weight: bold;
+    }
+    #clear-button:hover{
+        background-color: rgb(228, 56, 56);
+    }
+    #switch-on{
+        background-color: rgb(240, 194, 43);
+        font-weight: bold;
+    }
+    #switch-on:hover{
+        background-color: rgb(248, 211, 90);
+    }
+    #button-container{
+        margin-top: 10px;
+    }
+    #log-n-more{
+        display: flex;
+       flex-direction: row;
+       justify-content: space-evenly;
+       gap: 2px;
+    }
+    #button-container button{
+       width: 70px;
+       height: 50px;
+       margin-bottom: 7px;
+       background-color: white;
+    }
+    #button-container button, #button-container span{
+       font-size: medium;
+       font-weight: 500;
+    }
+    #digit-button{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+    #button-container button:hover{
+        background-color: rgb(235, 231, 231);
+    }
+    #equals:hover{
+        background-color: rgb(15, 77, 170) !important;
+    }
+    button:focus{
+        box-shadow: 0 2px 2px 2px rgba(239, 247, 250, 0.7);
+        border-radius: 0 0 5px 5px;
+        transform: translateY(-1px);
+    }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
+<body>
+    <div id="calculator-container">
+        <h2>Calcuator</h2>
+        <div id="display-container">
+            <!-- Contains the two  display divs-->
+             <div id="display-small-light"> </div>
+             <input id="display-large-bold" type="text">
+        </div>
+        <div id="non-functional">
+            <!-- This div contains spans with no coded functionalities and power buttons -->
+            <span style="margin-left: 0;"> MC </span>
+            <span> MR </span>
+            <span> M+ </span>
+            <span> M- </span>
+            <span> MS </span>
+            <span> M<i class="fa-solid fa-angle-down"></i></i> </span>
+            <button id="clear-button" onclick="clearN()"> CE </button>
+            <button id="switch-on" style="width: 70px; margin-right: 0; " onclick="switchOn()"> ON/OFF </button>
+        </div>
+        <div id="button-container">
+            <!-- Contains digit and buttons with coded functionalities  -->
+            <div id="log-n-more">
+                <button style="font-style: italic;" onclick="fnx('log')"> log </button>
+                <button onclick="fnx('sin')"> sin </button>
+                <button onclick="fnx('cos')"> cos </button>
+                <button onclick="fnx('tan')"> tan </button>
+                <button style="font-style: normal; font-family: sans-serif;" id="edit-number" onclick="editFromBack()"> <span style="font-size: x-small; border: 1px solid rgb(180, 177, 177); padding: 2px 4px;">x</span> </button>
+            </div>
+            <div id="digit-button">
+                <button onclick="fnx('recip')"> <span>1</span>/<span>x</span> </button>
+                <button value="x2" onclick="fnx('sqr')"><img src="https://cdn3.iconfinder.com/data/icons/medicon/512/formula_stock_new_table_navigator-512.png" style="width: 15px;"></button>
+                <button value="^0.5" onclick="fnx('sqrt')"> <i class="fa-solid fa-square-root-variable" style="color: rgb(100, 99, 99);"></i> </button>
+                <button value="x^y" onclick="sign('^')"> x^y </button>
+                <button onclick="sign('/')"> / </button>
+                <button onclick="digit('7')"> 7 </button>
+                <button onclick="digit('8')"> 8 </button>
+                <button onclick="digit('9')"> 9 </button>
+                <button onclick="fnx('ln')"> ln </button>
+                <button onclick="sign('x')"> x </button>
+                <button onclick="digit('4')"> 4 </button>
+                <button onclick="digit('5')"> 5 </button>
+                <button onclick="digit('6')"> 6 </button>
+                <button onclick="fnx('%')"> % </button>
+                <button onclick="sign('-')"> - </button>
+                <button onclick="digit('1')"> 1 </button>
+                <button onclick="digit('2')"> 2 </button>
+                <button onclick="digit('3')"> 3 </button>
+                <button onclick="PiShow()"> π </button>
+                <button onclick="sign('+')"> + </button>
+                <button onclick="fnx('neg')"> +/- </button>
+                <button onclick="expo()"> Exp </button>
+                <button onclick="digit('0')"> 0 </button>
+                <button onclick= "digit('.')"> . </button>
+                <button id="equals" style="background-color: rgb(36, 121, 250); color: white; font-weight: bold;" onclick="calculate()"> = </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    // Grab the display and input elements
+    let display = document.getElementById('display-small-light')
+    let inputNum = document.querySelector('input');
+
+    let computeStatement = []
+    let fnxAns = [];
+    let digitCollate = [];
+    let number1 = [];
+    let number2 = [];
+
+    // Function declaration for clearing screen using CE
+    function clearN() {
+            inputNum.placeholder = 0
+            inputNum.value = ''
+            display.innerHTML = ''
+            digitCollate = []
+    }
+
+    // Power on and off
+    function switchOn() {
+        if (inputNum.placeholder != ''){
+            inputNum.placeholder = ''
+        }
+        else{
+            clearN();
+        }
+    }
+
+    /*The function below checks:
+    1. If the calculator has not been switched on. If not it does not punch
+    2. If its switched on and the there's nothing yet on the screen, it punches the digits
+        using concat.
+    3. Checks if the value on the screen is a result from a previous calculation, 
+       if so, it does not concat*/ 
+    
+
+    function digit(num) {
+        if (inputNum.placeholder === ''){
+            console.log('no input');
+        }else if (inputNum.value == Math.PI || inputNum.value == Math.E || (digitCollate[digitCollate.length-1] == fnxAns[0] && inputNum.value != '')){
+            return
+        }else if (computeStatement[0] == inputNum.value){
+        number2= []
+          let newNumber =  ''
+            newNumber += num;
+            inputNum.value = newNumber;
+            console.log(inputNum.value);
+            
+        }
+        else{
+            inputNum.value += num
+        }
+        digitCollate.push(inputNum.value)
+        console.log(digitCollate);
+        
+    }
+
+    function PiShow() {
+        inputNum.value = Math.PI;
+        display.innerText = 'PI ='
+    }
+    function expo() {
+        inputNum.value = Math.E;
+        display.innerText = 'Exp ='
+    }
+
+    function editFromBack() {
+        inputNum.value = inputNum.value.slice(0, inputNum.value.length-1);
+    }
+    
+
+    function answerArr() {
+        fnxAns.push(inputNum.value)
+    }
+    
+function displaySmall(a,b) {
+    display.innerText =  `${a} ${b} =`
+}
+
+
+    function fnx(param) {
+        if (inputNum.value == '') {
+            return
+        }
+        computeStatement= []
+        fnxAns = []
+        computeStatement.push(parseFloat(inputNum.value));
+        computeStatement.push(param)
+        if (computeStatement[1] == 'log') {
+            displaySmall(param, inputNum.value);
+            inputNum.value = Math.log10(computeStatement[0]);
+        }else if (computeStatement[1] == 'sin'){
+           displaySmall(param, inputNum.value); 
+            inputNum.value = Math.sin(computeStatement[0]);
+        }else if (computeStatement[1] == 'cos'){
+            displaySmall(param, inputNum.value);
+            inputNum.value = Math.cos(computeStatement[0]);
+        }else if(computeStatement[1] == 'tan'){
+            displaySmall(param, inputNum.value);
+            inputNum.value = Math.tan(computeStatement[0])
+        }else if(computeStatement[1] == 'recip'){
+            display.innerText = `1/${inputNum.value}=`;
+            inputNum.value = 1/(computeStatement[0])
+        }else if (computeStatement[1] == 'sqr') {
+            displaySmall(param, inputNum.value);
+            inputNum.value = (computeStatement[0]) ** 2
+        }else if (computeStatement[1] == 'sqrt') {
+            displaySmall(param, inputNum.value);
+            inputNum.value = Math.sqrt(computeStatement[0]);
+        }else if (computeStatement[1] == 'ln') {
+             displaySmall(param, inputNum.value);
+            inputNum.value = Math.log1p(computeStatement[0])
+        }else if (computeStatement[1] == '%') {
+            display.innerText = `${inputNum.value}/100 =`;
+            inputNum.value = (computeStatement[0])/100
+        }else {
+            displaySmall(param, inputNum.value);
+            inputNum.value = (computeStatement[0]) * -1;
+        }
+        answerArr()
+        digitCollate.push(inputNum.value) 
+    }
+
+    
+    function sign(arith) {
+        if (inputNum.value == '') {
+            return
+        }
+        computeStatement = []
+        number1 = [];
+        computeStatement.push(inputNum.value);
+        computeStatement.push(arith);
+        number1.push(parseFloat(inputNum.value))
+        console.log(computeStatement, number1);
+    }
+    
+    function calculate() {
+        if (computeStatement.length < 2){
+            return
+        }
+
+        if (computeStatement[1] == '+') {
+            display.innerText = `${computeStatement[0]} ${computeStatement[1]} ${digitCollate[digitCollate.length-1]}= `
+            inputNum.value =  number1[0] + (parseFloat(digitCollate[digitCollate.length-1]))   
+        }else if (computeStatement[1] == '-'){
+            display.innerText = `${computeStatement[0]} ${computeStatement[1]} ${digitCollate[digitCollate.length-1]}= `
+            inputNum.value =  number1[0] - (parseFloat(digitCollate[digitCollate.length-1]))   
+        }else if (computeStatement[1] == '/') {
+            display.innerText = `${computeStatement[0]} ${computeStatement[1]} ${digitCollate[digitCollate.length-1]}= `
+            inputNum.value =  number1[0] / (parseFloat(digitCollate[digitCollate.length-1]))
+        }else if (computeStatement[1] == 'x'){
+            display.innerText = `${computeStatement[0]} ${computeStatement[1]} ${digitCollate[digitCollate.length-1]}= `
+            inputNum.value =  number1[0] * (parseFloat(digitCollate[digitCollate.length-1]))
+        }else{
+            display.innerText = `${computeStatement[0]} ${computeStatement[1]} ${digitCollate[digitCollate.length-1]}= `
+            inputNum.value =  number1[0] ** (parseFloat(digitCollate[digitCollate.length-1]))
+        }
+    }
+</script>
+
+
