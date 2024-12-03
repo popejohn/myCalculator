@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    body{
+        background-color: rgb(142, 36, 241);
+    }
+    h2{
+        margin: 40px 0;
+        text-align: center;
+        color: white;
+    }
+    h2::first-letter{
+        font-size: 35px;
+    }
+    .calculator{
+        color: orange;
+    }
+    .top-input input{
+        height: 25px;
+        width: 45%;
+        border-radius: 5px;
+        outline: 1px solid rgb(223, 174, 223);
+        border: none;
+        padding: 3px;
+    }
+    .container{
+        box-shadow: 0 0 5px 2px rgb(250, 224, 250);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        gap: 20px;
+    }
+    button{
+        outline: none;
+        border: 1px solid white;
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+        margin: 5px 0;
+    }
+    #display{
+        background-color: rgb(247, 243, 252);
+        border-radius: 10px;
+        box-shadow: 0 0 5px 2px rgb(195, 195, 196);
+    }
+    .key-display{
+        display: flex;
+        justify-content: start;
+        gap: 20px;
+    }
+    button:focus{
+        transform: translateY(-1px);
+        transition-property: all;
+        transition-duration: 70ms;
+        transition-timing-function: ease-out;
+    }
+    #display{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<body>
+    <h2 class="title">Simple <span class="calculator">calculator</span></h2>
+    <div class="container" style="width: 480px; height: 60%; margin: auto auto; padding: 20px;">
+        <div class="top-input"> 
+            <input type="number" placeholder="input first number">
+            <input type="number" style="margin-left: 20px;" placeholder="input second number">
+        </div>
+        <div style="width: 100%;" class="key-display">
+            <div style="width: 50%;" class="operations">
+                <button value="+" id="add" onclick="plus()">+</button>
+                <button value="-" id="minus" onclick="minus()">-</button>
+                <button value="*" id="multiply" onclick="multiply()">*</button>
+                <button value="/" id="divide" onclick="divide()">/</button>
+                <button value="x^y" id="power" onclick="power()">x^y</button>
+                <button id="clear" onclick="clearView()">clr</button>
+                <button value="=" id="calculate" style="width: 190px;" onclick="calculate()">=</button>
+                
+            </div>
+            <div style="width: 40%;" id="display">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="assignment.js"></script>
